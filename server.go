@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 type todo struct {
@@ -91,6 +92,9 @@ func deleteTodo(c echo.Context) error {
 
 func main() {
 	e := echo.New()
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+
 	e.GET("/todos", getTodos)
 	e.GET("/todo/:id", getTodo)
 	e.POST("/todo", postTodo)
